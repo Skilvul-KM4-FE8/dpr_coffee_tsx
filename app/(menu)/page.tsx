@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useNewMenu } from "@/features/menu/hooks/use-new-menu";
 
 export default function DemoPage() {
-  let menu = [
+  let Menu = [
     {
       id: "728ed52f",
       author: "dpr_coffee",
@@ -29,7 +29,7 @@ export default function DemoPage() {
       <Button variant="default" onClick={onOpen}>
         Add Menu
       </Button>
-      <DataTable columns={columns} data={menu} />
+      <DataTable columns={columns} data={Menu} />
     </div>
   );
 }
