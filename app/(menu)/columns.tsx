@@ -13,10 +13,19 @@ export type Menu = {
   id: string;
   amount: number;
   author: string;
-  status: "pending" | "processing" | "success" | "failed";
+  status: string
   name: string;
   price: number;
 };
+
+type test ={
+  id: string;
+  author: string;
+  amount: number;
+  status: string;
+  name: string;
+  price: number;
+}
 
 export const columns: ColumnDef<Menu>[] = [
   {
