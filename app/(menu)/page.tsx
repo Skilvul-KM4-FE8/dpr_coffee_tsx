@@ -3,10 +3,11 @@ import { columns } from "@/app/(menu)/columns";
 import { DataTable } from "@/app/(menu)/data-table";
 import { Button } from "@/components/ui/button";
 import { useNewMenu } from "@/features/menu/hooks/use-new-menu";
-
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Plus } from "lucide-react";
 
 export default function DemoPage() {
-  let Menu = [
+  let dataMenu = [
     {
       id: "728ed52f",
       author: "dpr_coffee",
@@ -26,13 +27,34 @@ export default function DemoPage() {
   ];
   const { isOpen, onOpen, onClose } = useNewMenu();
   return (
-
-    <div className="container mx-auto py-10">
-      <Button variant="default" onClick={onOpen}>
-        Add Menu
-      </Button>
-      <DataTable columns={columns} data={Menu} />
-
-    </div>
+    <div className="mx-auto max-w-screen-2xl w-full pb-10 -mt-24">
+                <Card className="border-none drop-shadow-sm ">
+                    <CardHeader className="flex gap-y-2 lg:flex-row lg:items-center lg:justify-between">
+                        <CardTitle className="text-xl line-clamp-1">
+                            Accounts Page
+                        </CardTitle>
+                        <Button
+                            size="sm"
+                            onClick={onOpen}
+                        >
+                            <Plus className="size-4 mr-2" />
+                            Add new
+                        </Button>
+                    </CardHeader>
+                    <CardContent>
+                        <DataTable columns={columns} data={dataMenu} />
+                        {/* <DataTable 
+                            filterKey="name"
+                            columns={columns} 
+                            data={dataMenu} 
+                            onDelete={(row) => {
+                                const ids = row.map((r) => r.original.id)
+                                deleteAccount.mutate({ids})
+                            }}
+                            disabled={isDisabled}
+                        /> */}
+                    </CardContent>
+                </Card>
+            </div>
   );
 }
