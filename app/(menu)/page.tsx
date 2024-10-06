@@ -4,6 +4,7 @@ import { DataTable } from "@/app/(menu)/data-table";
 import { Button } from "@/components/ui/button";
 import { useNewMenu } from "@/features/menu/hooks/use-new-menu";
 
+
 export default function DemoPage() {
   let Menu = [
     {
@@ -25,11 +26,13 @@ export default function DemoPage() {
   ];
   const { isOpen, onOpen, onClose } = useNewMenu();
   return (
+
     <div className="container mx-auto py-10">
       <Button variant="default" onClick={onOpen}>
         Add Menu
       </Button>
       <DataTable columns={columns} data={Menu} />
+
     </div>
   );
 }
