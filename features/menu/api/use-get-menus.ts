@@ -1,18 +1,31 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
+type ResponseType = {
+    id: string
+    name: string
+    price: number
+}
+
 export const useGetMenus = () => {
-    const queryClient = useQuery({
+    const queryClient = useQuery<ResponseType[]>({
         queryKey: ["menus"],
         queryFn: async () => {
-            const response = axios.get("/api/menu")
+            const data = await axios.get("/api/menu")
 
-            if (!response) {
+            if (!data) {
                 throw new Error("error")
             }
 
-            console.log(response)
-            return response
+            // const transformedData = data.data.data.map((menu: any) => ({
+            //     id:menu.id,
+            //     name: menu.name,
+            //     price: menu.price,
+            //     // createdAt: menu.createdAt,
+            //     // updatedAt: menu.updatedAt,
+            // }))
+            console.log({data})
+            return data.data.data
         },
     })
 
