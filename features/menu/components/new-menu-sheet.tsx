@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useNewMenu } from "@/features/menu/hooks/use-new-menu";
 
