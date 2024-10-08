@@ -5,9 +5,9 @@ import NewMenuSheet from "@/features/menu/components/new-menu-sheet";
 import { useMountedState } from "react-use";
 
 const SheetProvider = () => {
-  const mounted = useMountedState();
+  const isMounted = useMountedState()
 
-  if (!mounted()) return null;
+  if (!isMounted) return null
 
   return (
     <>
