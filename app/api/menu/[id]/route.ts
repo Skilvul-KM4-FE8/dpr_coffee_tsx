@@ -21,9 +21,18 @@ export async function GET(req: Request, {params}: {params: {id: string}}) {
                 id: id
             }
         })
+
+        if (!response) {
+            return new Response(JSON.stringify({message: "NOT FOUND",}), {
+                status: 404,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        }
         
         console.log(response)
-        return new Response(JSON.stringify({response}), {
+        return new Response(JSON.stringify(response), {
             status: 200,
             headers: {
                 'Content-Type': 'application/json'
