@@ -1,9 +1,18 @@
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
-export const useGetMenu = (id: string) => {
-    const queryClient = useQuery({
-        queryKey: ["menu"],
+type ResponseType = {
+    id: string,
+    name: string,
+    price: string
+    createdAt: Date
+    updatedAt: Date
+}
+
+export const useGetMenu = (id?: string) => {
+    const queryClient = useQuery<ResponseType>({
+        enabled: !!id,
+        queryKey: ["menu", id],
         queryFn: async () =>{
             const response = await axios.get(`/api/menu/${id}`)
 
@@ -14,4 +23,6 @@ export const useGetMenu = (id: string) => {
             return response.data
         }
     })
+
+    return queryClient
 }

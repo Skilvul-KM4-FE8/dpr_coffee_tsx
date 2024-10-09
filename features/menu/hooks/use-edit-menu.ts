@@ -3,12 +3,12 @@ import { create } from "zustand";
 type EditMenuState = {
   id?: string;
   isOpen: boolean;
-  onOpen: (id: string) => void;
+  onOpen: (id?: string) => void;
   onClose: () => void;
 };
 
 export const useEditMenu = create<EditMenuState>((set) => ({
   isOpen: false,
-  onOpen: (id: string) => set({ isOpen: true, id }),
+  onOpen: (id?: string) => set({ isOpen: true, id }),
   onClose: () => set({ isOpen: false }),
 }));
