@@ -88,7 +88,7 @@ export const columns: ColumnDef<Menu>[] = [
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Copy payment ID</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={onOpen}>Edit</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onOpen(row.original.id)}>Edit</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </>
