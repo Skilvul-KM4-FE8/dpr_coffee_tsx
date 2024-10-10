@@ -59,6 +59,8 @@ export async function PATCH(req: Request, {params}: ParamsType) {
     const id = params.id
     const auth = getAuth(req as NextRequest)
     const payload = await req.json()
+    console.log(payload)
+    console.log(id)
 
     if (!auth?.userId) {
         return new Response(JSON.stringify({ message: "Unauthorized!"}), {
@@ -70,13 +72,13 @@ export async function PATCH(req: Request, {params}: ParamsType) {
     }
 
     try {
-        const response = prisma.menu.update({
+        const response = await prisma.menu.update({
             where: {
                 id: id
             },
             data : {
                 name: payload.name,
-                price: payload.price
+                price: payload.price,
             }
         })
         if (!response) {

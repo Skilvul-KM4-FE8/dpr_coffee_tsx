@@ -2,9 +2,9 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import { ArrowUpDown } from "lucide-react"
+import { ArrowUpDown } from "lucide-react";
 
-import { useEditMenu } from "@/features/menu/hooks/use-edit-menu";
+import { useOpenMenu } from "@/features/menu/hooks/use-open-menu";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -23,35 +23,18 @@ export type Menu = {
 export const columns: ColumnDef<Menu>[] = [
   {
     id: "select",
-    header: ({ table }) => (
-      <Checkbox 
-        checked={
-          table.getIsAllPageRowsSelected() || (table.getIsSomeRowsSelected()) && "indeterminate"
-        }
-        onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
-        aria-label="ini aria label"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox 
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row ini"
-      />
-    )
+    header: ({ table }) => <Checkbox checked={table.getIsAllPageRowsSelected() || (table.getIsSomeRowsSelected() && "indeterminate")} onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)} aria-label="ini aria label" />,
+    cell: ({ row }) => <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row ini" />,
   },
   {
     accessorKey: "name",
     header: ({ column }) => {
       return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
           Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
   },
   {
@@ -59,9 +42,11 @@ export const columns: ColumnDef<Menu>[] = [
     header: () => <div className="text-left">Price</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("price"));
-      const formatted = new Intl.NumberFormat("en-US", {
+      const formatted = new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
       }).format(amount);
 
       return <div className="text-left font-medium">{formatted}</div>;
@@ -73,7 +58,7 @@ export const columns: ColumnDef<Menu>[] = [
     cell: ({ row }) => {
       const payment = row.original;
 
-      const { onOpen } = useEditMenu();
+      const { onOpen } = useOpenMenu();
 
       return (
         <>

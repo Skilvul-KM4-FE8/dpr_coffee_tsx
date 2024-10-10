@@ -48,26 +48,24 @@ export const MenuForm = ({
     })
 
     // 2. Define a submit handler.
-    function handleSubmit(values: FormValues) {
-        // console.log(values)
+    // function handleSubmit(values: FormValues) {
+    //     // console.log(values)
+    //     const parsedPrice = parseFloat(values.price)
+    //     if (isNaN(parsedPrice)) {
+    //         console.log("Price is not a number")
+    //         return
+    //     }
 
-        
-        const parsedPrice = parseFloat(values.price)
-        if (isNaN(parsedPrice)) {
-            console.log("Price is not a number")
-            return
-        }
-
-        onSubmit({
-            ...values,
-            price: parsedPrice.toString()
-        })
-    }
+    //     onSubmit({
+    //         ...values,
+    //         price: parsedPrice.toString()
+    //     })
+    // }
 
     return (
         <>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-8 gap-5 grid">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 gap-5 grid">
                     <FormField 
                         control={form.control}
                         name="name"

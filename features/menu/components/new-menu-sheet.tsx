@@ -26,19 +26,39 @@ const NewMenuSheet = () => {
   const onSubmit = (values: FormValues) => {
     console.log("Submit");
 
-    const menuData = {
-      name: values.name,
-      price: parseFloat(values.price)
+    // const menuData = {
+    //   name: values.name,
+    //   price: parseFloat(values.price)
+    // }
+
+    const parsedPrice = parseFloat(values.price)
+    if (isNaN(parsedPrice)) {
+        console.log("Price is not a number")
+        return
     }
 
     // console.log(values)
-    mutation.mutate(menuData, {
+    mutation.mutate({...values, price: parsedPrice}, {
       onSuccess: (data) => {
         console.log({data})
         onClose()
       }
     })
   };
+
+  // function handleSubmit(values: FormValues) {
+  //   // console.log(values)
+  //   const parsedPrice = parseFloat(values.price)
+  //   if (isNaN(parsedPrice)) {
+  //       console.log("Price is not a number")
+  //       return
+  //   }
+
+  //   onSubmit({
+  //       ...values,
+  //       price: parsedPrice.toString()
+  //   })
+  // }
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
