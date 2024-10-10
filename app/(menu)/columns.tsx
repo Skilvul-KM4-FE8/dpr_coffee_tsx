@@ -8,6 +8,8 @@ import { useOpenMenu } from "@/features/menu/hooks/use-open-menu";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useConfirm } from "@/hooks/use-confirm";
+import { useDeleteMenu } from "@/features/menu/api/use-delete-menu";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
@@ -59,9 +61,20 @@ export const columns: ColumnDef<Menu>[] = [
       const payment = row.original;
 
       const { onOpen } = useOpenMenu();
+      const deleteMutation = useDeleteMenu(payment.id!);
+      const [DialogConfirm, confirm] = useConfirm("Are you sure?", "you are about to delete this menu")
+      
+      const handleDeleteMenu = async () => {
+        const ok = await confirm()
+        if (ok) {
+          deleteMutation.mutate()
+        }
+        return null 
+      }
 
       return (
         <>
+        <DialogConfirm />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
@@ -71,9 +84,10 @@ export const columns: ColumnDef<Menu>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Copy payment ID</DropdownMenuItem>
               <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Copy this menu ID</DropdownMenuItem>
               <DropdownMenuItem onClick={() => onOpen(row.original.id)}>Edit</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleDeleteMenu}>Delete</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </>

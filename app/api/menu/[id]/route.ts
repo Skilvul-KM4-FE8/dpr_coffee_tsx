@@ -21,6 +21,13 @@ export async function GET(req: Request, {params}: ParamsType) {
         })
     }
 
+    if (!id) {
+        return new Response(JSON.stringify({ message: "Transaction ID is required!" }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
+
     try {
         const response = await prisma.menu.findFirst({
             where: {
@@ -61,6 +68,13 @@ export async function PATCH(req: Request, {params}: ParamsType) {
     const payload = await req.json()
     console.log(payload)
     console.log(id)
+
+    if (!id) {
+        return new Response(JSON.stringify({ message: "Transaction ID is required!" }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' }
+        });
+    }
 
     if (!auth?.userId) {
         return new Response(JSON.stringify({ message: "Unauthorized!"}), {
@@ -119,6 +133,13 @@ export async function DELETE(req: Request, {params}: ParamsType) {
                 'Content-Type': 'application/json',
             }
         })
+    }
+    
+    if (!id) {
+        return new Response(JSON.stringify({ message: "Transaction ID is required!" }), {
+            status: 400,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 
     try {
