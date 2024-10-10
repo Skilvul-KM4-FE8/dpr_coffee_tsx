@@ -1,5 +1,6 @@
 import {prisma} from "@/lib/prisma"
 import { getAuth } from "@clerk/nextjs/server"
+import { Prisma } from "@prisma/client"
 import { NextRequest } from "next/server"
 
 type ParamsType = {
@@ -29,10 +30,16 @@ export async function GET(req: Request, {params}: ParamsType) {
     }
 
     try {
+        // const menuRes = Prisma.validator<Prisma.MenuSelect>()({
+        //     id: true,
+        //     name: true
+        // }) 
+
         const response = await prisma.menu.findFirst({
             where: {
                 id: id
-            }
+            },
+            // select: menuRes
         })
 
         if (!response) {
@@ -134,7 +141,7 @@ export async function DELETE(req: Request, {params}: ParamsType) {
             }
         })
     }
-    
+
     if (!id) {
         return new Response(JSON.stringify({ message: "Transaction ID is required!" }), {
             status: 400,
@@ -143,10 +150,11 @@ export async function DELETE(req: Request, {params}: ParamsType) {
     }
 
     try {
+
         const response = await prisma.menu.delete({
             where: {
                 id: id
-            }
+            },
         })
         console.log(response)
         return new Response(JSON.stringify({message: "Success", response}), {

@@ -7,25 +7,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Loader2, Plus } from "lucide-react";
 import { useGetMenus } from "@/features/menu/api/use-get-menus";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useBulkDeleteMenus } from "@/features/menu/api/use-bulk-delete-menus";
 
-export default function DemoPage() {
-  let dataMenu = [
-    {
-      id: "728ed52f",
-      name: "Kopi Susu Gula Aren",
-      price: 25000,
-    },
-    {
-      id: "728ed52f",
-      name: "Americano",
-      price: 17000,
-    },
-  ];
+export default function MenuPage() {
+
   const menuQuery = useGetMenus()  
   const menuData = menuQuery.data || []
   const { isOpen, onOpen, onClose } = useNewMenu();
   console.log("Data dari Api:",menuData)
-  console.log("Data local:", dataMenu)
+
+  const bulkDeleteMenuMutation = useBulkDeleteMenus()
+
+  const disabled = menuQuery.isLoading || bulkDeleteMenuMutation.isPending
 
   if (menuQuery.isLoading) {
     return (
@@ -72,7 +65,16 @@ export default function DemoPage() {
                         </Button>
                     </CardHeader>
                     <CardContent>
-                        <DataTable columns={columns} data={menuData} />
+                        <DataTable 
+                          columns={columns} 
+                          data={menuData} 
+                          disabled={disabled} 
+                          onDelete={(rows) => {
+                            const ids = rows.map((row) => row.original.id)
+
+                            bulkDeleteMenuMutation.mutate(ids)
+                          }}
+                        />
                         {/* <DataTable 
                             filterKey="name"
                             columns={columns} 

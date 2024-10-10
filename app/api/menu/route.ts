@@ -61,7 +61,7 @@ export async function GET(req: Request) {
     try {
         const data = await prisma.menu.findMany()
 
-        return new Response(JSON.stringify({data}))
+        return new Response(JSON.stringify(data))
     } catch (error) {
         console.error('Error parsing request body:', error);
         return new Response(JSON.stringify({ message: 'Failed to parse request' }), {

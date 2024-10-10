@@ -11,9 +11,9 @@ export const useGetMenus = () => {
     const queryClient = useQuery<ResponseType[]>({
         queryKey: ["menus"],
         queryFn: async () => {
-            const data = await axios.get("/api/menu")
+            const response = await axios.get("/api/menu")
 
-            if (!data) {
+            if (!response) {
                 throw new Error("error")
             }
 
@@ -24,8 +24,8 @@ export const useGetMenus = () => {
             //     // createdAt: menu.createdAt,
             //     // updatedAt: menu.updatedAt,
             // }))
-            console.log({data})
-            return data.data.data
+            console.log(response)
+            return response.data
         },
     })
 
