@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { Minus, MoreHorizontal, Plus } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
 
 import { useOpenMenu } from "@/features/menu/hooks/use-open-menu";
@@ -39,6 +39,34 @@ export const columns: ColumnDef<Menu>[] = [
       );
     },
   },
+  // {
+  //   accessorKey: "amount",
+  //   header: ({ column }) => {
+  //     return (
+  //       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+  //         Amount
+  //         <ArrowUpDown className="ml-2 h-4 w-4" />
+  //       </Button>
+  //     );
+  //   },
+  //   cell: ({ row }) => {
+  //     let amount = parseFloat(row.getValue("amount"));
+
+  //     return (
+  //       <div className="flex items-center gap-x-3">
+  //         <Button variant={"ghost"} size={"sm"}
+  //           onClick={() => {
+  //             amount - 1
+  //           }}
+  //         ><Minus className="size-4" /></Button>
+  //         <div className=" font-medium">{amount}</div>
+  //         <Button type="button" variant={"ghost"} size={"sm"} onClick={() => {
+  //             amount = amount + 1
+  //           }}><Plus className="size-4" /></Button>
+  //       </div>
+  //     );
+  //   }
+  // },
   {
     accessorKey: "price",
     header: () => <div className="text-left">Price</div>,

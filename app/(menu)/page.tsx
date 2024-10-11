@@ -8,6 +8,7 @@ import { Loader2, Plus } from "lucide-react";
 import { useGetMenus } from "@/features/menu/api/use-get-menus";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useBulkDeleteMenus } from "@/features/menu/api/use-bulk-delete-menus";
+import useBuyDialog from "@/features/transaction/hooks/use-buy-dialog";
 
 export default function MenuPage() {
 
@@ -15,6 +16,7 @@ export default function MenuPage() {
   const menuData = menuQuery.data || []
   const { isOpen, onOpen, onClose } = useNewMenu();
   console.log("Data dari Api:",menuData)
+  const { onOpen: isOpenBuyDialog} = useBuyDialog()
 
   const bulkDeleteMenuMutation = useBulkDeleteMenus()
 
@@ -67,12 +69,26 @@ export default function MenuPage() {
                     <CardContent>
                         <DataTable 
                           columns={columns} 
-                          data={menuData} 
+                          data={menuData.map((menu) => ({
+                            ...menu,
+                            quantity: 1,
+                          }))} 
                           disabled={disabled} 
                           onDelete={(rows) => {
                             const ids = rows.map((row) => row.original.id)
-
+                            
                             bulkDeleteMenuMutation.mutate(ids)
+                          }}
+                          onBuyItems={(rows) => {
+                            console.log("Rows selected for buying:", rows);
+                            const datas = rows.map((row) => ({
+                                ...row.original,
+                            }));
+
+                            isOpenBuyDialog(datas);
+
+                            console.log("Buy from page.tsx");
+                            // console.log("Data yang dibeli:", datas);
                           }}
                         />
                         {/* <DataTable 
