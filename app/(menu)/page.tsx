@@ -4,7 +4,7 @@ import { DataTable } from "@/app/(menu)/data-table";
 import { Button } from "@/components/ui/button";
 import { useNewMenu } from "@/features/menu/hooks/use-new-menu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Loader2, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useGetMenus } from "@/features/menu/api/use-get-menus";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useBulkDeleteMenus } from "@/features/menu/api/use-bulk-delete-menus";
@@ -14,7 +14,7 @@ export default function MenuPage() {
 
   const menuQuery = useGetMenus()  
   const menuData = menuQuery.data || []
-  const { isOpen, onOpen, onClose } = useNewMenu();
+  const { onOpen } = useNewMenu();
   console.log("Data dari Api:",menuData)
   const { onOpen: isOpenBuyDialog} = useBuyDialog()
 

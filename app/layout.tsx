@@ -1,6 +1,6 @@
 "use client"
-import type { Metadata } from "next";
-import localFont from "next/font/local";
+// import type { Metadata } from "next";
+// import localFont from "next/font/local";
 import "./globals.css";
 import { Inter } from 'next/font/google';
 import { ClerkProvider } from "@clerk/nextjs";
