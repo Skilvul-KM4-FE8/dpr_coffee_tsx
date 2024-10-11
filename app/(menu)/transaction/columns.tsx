@@ -14,6 +14,7 @@ import { useDeleteMenu } from "@/features/menu/api/use-delete-menu";
 // You can use a Zod schema here if you want.
 
 export type transactionType = {
+  id: string;
   receptionist: string;
   customer: string;
   items: {
@@ -59,7 +60,7 @@ export const columns: ColumnDef<transactionType>[] = [
     accessorKey: "totalPrice",
     header: () => <div className="text-left">Total Price</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("price"));
+      const amount = parseFloat(row.getValue("totalPrice"));
       const formatted = new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
@@ -102,6 +103,7 @@ export const columns: ColumnDef<transactionType>[] = [
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Copy this menu ID</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onOpen(row.original.id)}>Details</DropdownMenuItem>
               <DropdownMenuItem onClick={() => onOpen(row.original.id)}>Edit</DropdownMenuItem>
               <DropdownMenuItem onClick={handleDeleteMenu}>Delete</DropdownMenuItem>
             </DropdownMenuContent>

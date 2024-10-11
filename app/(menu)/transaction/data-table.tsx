@@ -13,10 +13,10 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   disabled?: boolean;
   onDelete: (rows: Row<TData>[]) => void;
-  onBuyItems: (rows: Row<TData>[]) => void;
+  // onBuyItems: (rows: Row<TData>[]) => void;
 }
 
-export function DataTable<TData, TValue>({ columns, data, disabled, onDelete, onBuyItems }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
@@ -83,7 +83,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete, on
               className="bg-gradient-to-b from-[#7a77c4] to-[#6196A6]"
               onClick={async () => {
                 table.getColumn("name")?.setFilterValue("");
-                setSortingValue(""), onBuyItems(table.getSelectedRowModel().rows);
+                setSortingValue("");
               }}
             >
               Buy ({table.getSelectedRowModel().rows.length}) item{table.getSelectedRowModel().rows.length > 1 && "s"}
