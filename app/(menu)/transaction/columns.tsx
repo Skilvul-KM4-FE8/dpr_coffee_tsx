@@ -13,63 +13,51 @@ import { useDeleteMenu } from "@/features/menu/api/use-delete-menu";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export type Menu = {
-  id: string;
-  // price: number;
-  // author: string;
-  // status: string
-  name: string;
-  price: number;
+export type transactionType = {
+  receptionist: string;
+  customer: string;
+  items: {
+    id: string;
+    name: string;
+    price: number;
+    quantity: number;
+    // createdAt: Date
+    // updatedAt: Date
+  }[];
+  totalPrice: number;
 };
 
-export const columns: ColumnDef<Menu>[] = [
+export const columns: ColumnDef<transactionType>[] = [
   {
     id: "select",
     header: ({ table }) => <Checkbox checked={table.getIsAllPageRowsSelected() || (table.getIsSomeRowsSelected() && "indeterminate")} onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)} aria-label="ini aria label" />,
     cell: ({ row }) => <Checkbox checked={row.getIsSelected()} onCheckedChange={(value) => row.toggleSelected(!!value)} aria-label="Select row ini" />,
   },
   {
-    accessorKey: "name",
+    accessorKey: "receptionist",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Name
+          Receptionist
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
   },
-  // {
-  //   accessorKey: "amount",
-  //   header: ({ column }) => {
-  //     return (
-  //       <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-  //         Amount
-  //         <ArrowUpDown className="ml-2 h-4 w-4" />
-  //       </Button>
-  //     );
-  //   },
-  //   cell: ({ row }) => {
-  //     let amount = parseFloat(row.getValue("amount"));
-
-  //     return (
-  //       <div className="flex items-center gap-x-3">
-  //         <Button variant={"ghost"} size={"sm"}
-  //           onClick={() => {
-  //             amount - 1
-  //           }}
-  //         ><Minus className="size-4" /></Button>
-  //         <div className=" font-medium">{amount}</div>
-  //         <Button type="button" variant={"ghost"} size={"sm"} onClick={() => {
-  //             amount = amount + 1
-  //           }}><Plus className="size-4" /></Button>
-  //       </div>
-  //     );
-  //   }
-  // },
   {
-    accessorKey: "price",
-    header: () => <div className="text-left">Price</div>,
+    accessorKey: "customer",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Customer
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "totalPrice",
+    header: () => <div className="text-left">Total Price</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("price"));
       const formatted = new Intl.NumberFormat("id-ID", {
