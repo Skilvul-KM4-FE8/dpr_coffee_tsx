@@ -85,11 +85,11 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete, on
                 const ok = await confirm()
                 if (ok) {
                   // table.getFilteredSelectedRowModel().rows
-                  onDelete(table.getFilteredSelectedRowModel().rows)
+                  onDelete(table.getSelectedRowModel().rows)
                 }
               }}
             >
-              Delete ({table.getFilteredSelectedRowModel().rows.length})
+              Delete ({table.getSelectedRowModel().rows.length})
             </Button>
             <Button
               type="button"
