@@ -46,28 +46,21 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete, on
   });
 
   // Create a sorted data array with selected rows at the top
-  const [sortingValue, setSortingValue] = React.useState(table.getColumn("name")?.getFilterValue() as string|| "")
+  const [sortingValue, setSortingValue] = React.useState((table.getColumn("name")?.getFilterValue() as string) || "");
 
   return (
     <div>
       <ConfirmDialog />
       <div className="flex items-center justify-between py-4">
-<<<<<<< HEAD
-        <Input placeholder="Filter names..." value={(table.getColumn("name")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)} className="max-w-sm" />
-        {table.getFilteredSelectedRowModel().rows.length > 0 && (
-=======
         <Input
           placeholder="Filter names..."
-          value={(sortingValue) ?? ""}
+          value={sortingValue ?? ""}
           onChange={(event) => {
-            setSortingValue(event.target.value),
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          }
+            setSortingValue(event.target.value), table.getColumn("name")?.setFilterValue(event.target.value);
+          }}
           className="max-w-sm"
         />
         {table.getSelectedRowModel().rows.length > 0 && (
->>>>>>> origin/menuform
           <div className="gap-x-4 flex ml-4">
             <Button
               type="button"
@@ -77,34 +70,23 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete, on
               onClick={async () => {
                 const ok = await confirm();
                 if (ok) {
-<<<<<<< HEAD
-                  table.getFilteredSelectedRowModel().rows;
-                  onDelete(table.getFilteredSelectedRowModel().rows);
-=======
                   // table.getFilteredSelectedRowModel().rows
-                  onDelete(table.getSelectedRowModel().rows)
->>>>>>> origin/menuform
+                  onDelete(table.getSelectedRowModel().rows);
                 }
               }}
             >
               Delete ({table.getSelectedRowModel().rows.length})
             </Button>
-<<<<<<< HEAD
-            <Button type="button" disabled={disabled} className="bg-gradient-to-b from-[#7a77c4] to-[#6196A6]" onClick={async () => onBuyItems(table.getFilteredSelectedRowModel().rows)}>
-              Buy ({table.getFilteredSelectedRowModel().rows.length}) item{table.getFilteredSelectedRowModel().rows.length > 1 && "s"}
-=======
             <Button
               type="button"
               disabled={disabled}
               className="bg-gradient-to-b from-[#7a77c4] to-[#6196A6]"
               onClick={async () => {
-                table.getColumn("name")?.setFilterValue("")
-                setSortingValue(""),
-                onBuyItems(table.getSelectedRowModel().rows)
+                table.getColumn("name")?.setFilterValue("");
+                setSortingValue(""), onBuyItems(table.getSelectedRowModel().rows);
               }}
             >
               Buy ({table.getSelectedRowModel().rows.length}) item{table.getSelectedRowModel().rows.length > 1 && "s"}
->>>>>>> origin/menuform
             </Button>
           </div>
         )}
