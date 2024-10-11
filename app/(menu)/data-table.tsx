@@ -1,19 +1,12 @@
 "use client";
 
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable, getPaginationRowModel,   SortingState,  getSortedRowModel,  ColumnFiltersState,   getFilteredRowModel, Row, } from "@tanstack/react-table";
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable, getPaginationRowModel, SortingState, getSortedRowModel, ColumnFiltersState, getFilteredRowModel, Row } from "@tanstack/react-table";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import * as React from "react"
-import { Input } from "@/components/ui/input"
+import * as React from "react";
+import { Input } from "@/components/ui/input";
 import { useConfirm } from "@/hooks/use-confirm";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -23,15 +16,11 @@ interface DataTableProps<TData, TValue> {
   onBuyItems: (rows: Row<TData>[]) => void;
 }
 
-
 export function DataTable<TData, TValue>({ columns, data, disabled, onDelete, onBuyItems }: DataTableProps<TData, TValue>) {
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  
-  const [ConfirmDialog, confirm] = useConfirm("Bulk Delete", "Are you sure you want to delete this item?")
+  const [ConfirmDialog, confirm] = useConfirm("Delete", "Are you sure you want to delete this item?");
 
   // const sortedData = React.useMemo(() => {
   //   const selectedRows = data.filter(row => row.getIsSelected()); // Adjust based on your data structure
@@ -53,24 +42,16 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete, on
     state: {
       sorting,
       columnFilters,
-    }
+    },
   });
 
   // Create a sorted data array with selected rows at the top
-
 
   return (
     <div>
       <ConfirmDialog />
       <div className="flex items-center justify-between py-4">
-        <Input
-          placeholder="Filter names..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        <Input placeholder="Filter names..." value={(table.getColumn("name")?.getFilterValue() as string) ?? ""} onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)} className="max-w-sm" />
         {table.getFilteredSelectedRowModel().rows.length > 0 && (
           <div className="gap-x-4 flex ml-4">
             <Button
@@ -79,74 +60,59 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete, on
               variant={"destructive"}
               className="transition"
               onClick={async () => {
-                const ok = await confirm()
+                const ok = await confirm();
                 if (ok) {
-                  table.getFilteredSelectedRowModel().rows
-                  onDelete(table.getFilteredSelectedRowModel().rows)
+                  table.getFilteredSelectedRowModel().rows;
+                  onDelete(table.getFilteredSelectedRowModel().rows);
                 }
               }}
             >
               Delete ({table.getFilteredSelectedRowModel().rows.length})
             </Button>
-            <Button
-              type="button"
-              disabled={disabled}
-              className="bg-gradient-to-b from-[#7a77c4] to-[#6196A6]"
-              onClick={async () => onBuyItems(table.getFilteredSelectedRowModel().rows) }
-            >
+            <Button type="button" disabled={disabled} className="bg-gradient-to-b from-[#7a77c4] to-[#6196A6]" onClick={async () => onBuyItems(table.getFilteredSelectedRowModel().rows)}>
               Buy ({table.getFilteredSelectedRowModel().rows.length}) item{table.getFilteredSelectedRowModel().rows.length > 1 && "s"}
             </Button>
           </div>
         )}
       </div>
-    <div className="rounded-md border">
-      <Table>
-        <TableHeader>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return <TableHead key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>;
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                ))}
+      <div className="rounded-md border">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  return <TableHead key={header.id}>{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}</TableHead>;
+                })}
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={columns.length} className="h-24 text-center">
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="flex items-center justify-end space-x-2 py-4">
+        <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+          Previous
+        </Button>
+        <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+          Next
+        </Button>
+      </div>
     </div>
-    <div className="flex items-center justify-end space-x-2 py-4">
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => table.previousPage()}
-        disabled={!table.getCanPreviousPage()}
-      >
-        Previous
-      </Button>
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => table.nextPage()}
-        disabled={!table.getCanNextPage()}
-      >
-        Next
-      </Button>
-    </div>
-  </div>
   );
 }
