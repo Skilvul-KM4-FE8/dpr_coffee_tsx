@@ -51,11 +51,11 @@ const TransactionBuyDialog = () => {
      const [quantities, setQuantities] = useState<number[]>([])
 
      // When menu changes, set default quantity to 1 for each item
-     useEffect(() => {
-         if (menu) {
-             setQuantities(menu.map(() => 1))
-         }
-     }, [menu])
+    useEffect(() => {
+            if (menu) {
+                setQuantities(menu.map(() => 1))
+            }
+    }, [menu])
 
     // Function to update quantity
     const handleQuantityChange = (index: number, newQuantity: number ) => {
@@ -156,6 +156,9 @@ const TransactionBuyDialog = () => {
                                                 </Button>
                                                 <Input 
                                                     type="number" 
+                                                    // aren menu[1]
+                                                    // exporeso menu[2]
+                                                    // quantity[1] : 1
                                                     value={quantities[index]} 
                                                     onChange={(e) => 
                                                         handleQuantityChange(
