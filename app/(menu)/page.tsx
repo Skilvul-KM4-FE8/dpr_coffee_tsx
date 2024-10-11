@@ -70,31 +70,15 @@ export default function MenuPage() {
             disabled={disabled}
             onDelete={(rows) => {
               const ids = rows.map((row) => row.original.id);
-
               bulkDeleteMenuMutation.mutate(ids);
             }}
             onBuyItems={(rows) => {
-              console.log("Rows selected for buying:", rows);
+              // console.log("Rows selected for buying:", rows);
               const datas = rows.map((row) => ({
                 ...row.original,
               }));
-
-              isOpenBuyDialog(datas);
-
-              console.log("Buy from page.tsx");
-              // console.log("Data yang dibeli:", datas);
             }}
           />
-          {/* <DataTable 
-                            filterKey="name"
-                            columns={columns} 
-                            data={dataMenu} 
-                            onDelete={(row) => {
-                                const ids = row.map((r) => r.original.id)
-                                deleteAccount.mutate({ids})
-                            }}
-                            disabled={isDisabled}
-                        /> */}
         </CardContent>
       </Card>
     </div>
