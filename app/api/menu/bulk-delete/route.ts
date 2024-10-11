@@ -31,7 +31,7 @@ export async function POST(req: Request) {
             },
         });
     } catch (error) {
-        console.error("Error")
+        console.error(error)
         return new Response(JSON.stringify({ message: 'Failed to bulk delete!' }), {
             status: 400,
             headers: {

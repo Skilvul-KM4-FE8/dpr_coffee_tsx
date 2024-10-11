@@ -1,6 +1,5 @@
 import {prisma} from "@/lib/prisma"
 import { getAuth } from "@clerk/nextjs/server"
-import { Prisma } from "@prisma/client"
 import { NextRequest } from "next/server"
 
 type ParamsType = {

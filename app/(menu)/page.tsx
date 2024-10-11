@@ -11,11 +11,13 @@ import { useBulkDeleteMenus } from "@/features/menu/api/use-bulk-delete-menus";
 import useBuyDialog from "@/features/transaction/hooks/use-buy-dialog";
 
 export default function MenuPage() {
-  const menuQuery = useGetMenus();
-  const menuData = menuQuery.data || [];
-  const { isOpen, onOpen, onClose } = useNewMenu();
-  console.log("Data dari Api:", menuData);
-  const { onOpen: isOpenBuyDialog } = useBuyDialog();
+
+  const menuQuery = useGetMenus()  
+  const menuData = menuQuery.data || []
+  const { onOpen } = useNewMenu();
+  console.log("Data dari Api:",menuData)
+  const { onOpen: isOpenBuyDialog} = useBuyDialog()
+
 
   const bulkDeleteMenuMutation = useBulkDeleteMenus();
 

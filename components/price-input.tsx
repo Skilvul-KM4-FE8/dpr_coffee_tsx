@@ -1,4 +1,3 @@
-import { Tooltip, TooltipProvider } from "./ui/tooltip"
 import CurrencyInput from "react-currency-input-field"
 
 type Props = {
