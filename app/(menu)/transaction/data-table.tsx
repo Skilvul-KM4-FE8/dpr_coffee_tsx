@@ -51,7 +51,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
       <ConfirmDialog />
       <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Filter names..."
+          placeholder="Find customer..."
           value={sortingValue ?? ""}
           onChange={(event) => {
             setSortingValue(event.target.value), table.getColumn("customer")?.setFilterValue(event.target.value);

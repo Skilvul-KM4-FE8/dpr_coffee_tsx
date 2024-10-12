@@ -59,7 +59,14 @@ export const columns: ColumnDef<transactionType>[] = [
   },
   {
     accessorKey: "totalPrice",
-    header: () => <div className="text-left">Total Price</div>,
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Total Price
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("totalPrice"));
       const formatted = new Intl.NumberFormat("id-ID", {
