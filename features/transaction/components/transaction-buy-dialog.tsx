@@ -18,12 +18,13 @@ import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { config } from "@/middleware";
 import { Minus, Plus } from "lucide-react";
+import { useCreateTransaction } from "../api/use-create-transaction";
 
 const TransactionBuyDialog = () => {
   const { isOpen, onOpen, onClose, menu } = useBuyDialog();
+  const createMutation = useCreateTransaction()
   const auth = useUser();
 
-  // Set quantity to 1 for every menu
   // State for quantity per item, initialized to 1 for all menu items
   const [quantities, setQuantities] = useState<number[]>([]);
 
@@ -43,10 +44,6 @@ const TransactionBuyDialog = () => {
 
   // calculate total price based on quantities
   const total = menu.reduce((acc, item, index) => acc + item.price * quantities[index], 0);
-
-  console.log("quantities : ", quantities);
-  console.log("menu : ", menu);
-
   // const total = menu.reduce((acc, item) => acc + item.price, 0)
 
   // 1. Define your form.
@@ -64,16 +61,22 @@ const TransactionBuyDialog = () => {
     console.log(values);
 
     const orderData = {
-      waiter: auth.user?.fullName || "Unknown Waiter",
+      receptionist: auth.user?.fullName || "Unknown Waiter",
       customer: values.customer,
-      menu: menu.map((item, index) => ({
+      items: menu.map((item, index) => ({
         ...item,
         name: item.name,
         quantity: quantities[index],
         price: item.price * quantities[index],
       })),
+      totalPrice: total,
     };
     console.log(orderData);
+    createMutation.mutate(orderData, {
+        onSuccess: () => {
+            onClose()
+        }
+    })
   }
 
   return (
@@ -163,7 +166,7 @@ const TransactionBuyDialog = () => {
                   </Table>
                   {/* Display total price */}
                   <p className="text-right mr-4 font-bold text-slate-900">Total: Rp.{total}</p>
-                  <Button type="submit" className="mx-auto inline-block">
+                  <Button type="submit" className="mx-auto inline-block" disabled={createMutation.isPending}>
                     Submit
                   </Button>
                 </form>
