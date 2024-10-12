@@ -77,8 +77,13 @@ export default function MenuPage() {
             onBuyItems={(rows) => {
               // console.log("Rows selected for buying:", rows);
               const datas = rows.map((row) => ({
-                ...row.original,
+                  ...row.original,
               }));
+
+              isOpenBuyDialog(datas);
+
+              // console.log("Buy from page.tsx");
+              // console.log("Data yang dibeli:", datas);
             }}
           />
         </CardContent>
