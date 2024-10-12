@@ -6,14 +6,12 @@ import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { useConfirm } from "@/hooks/use-confirm";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   disabled?: boolean;
   onDelete: (rows: Row<TData>[]) => void;
-  // onBuyItems: (rows: Row<TData>[]) => void;
 }
 
 export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: DataTableProps<TData, TValue>) {
@@ -46,7 +44,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
   });
 
   // Create a sorted data array with selected rows at the top
-  const [sortingValue, setSortingValue] = React.useState((table.getColumn("name")?.getFilterValue() as string) || "");
+  const [sortingValue, setSortingValue] = React.useState((table.getColumn("customer")?.getFilterValue() as string) || "");
 
   return (
     <div>
@@ -56,7 +54,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
           placeholder="Filter names..."
           value={sortingValue ?? ""}
           onChange={(event) => {
-            setSortingValue(event.target.value), table.getColumn("name")?.setFilterValue(event.target.value);
+            setSortingValue(event.target.value), table.getColumn("customer")?.setFilterValue(event.target.value);
           }}
           className="max-w-sm"
         />
@@ -76,17 +74,6 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
               }}
             >
               Delete ({table.getSelectedRowModel().rows.length})
-            </Button>
-            <Button
-              type="button"
-              disabled={disabled}
-              className="bg-gradient-to-b from-[#7a77c4] to-[#6196A6]"
-              onClick={async () => {
-                table.getColumn("name")?.setFilterValue("");
-                setSortingValue("");
-              }}
-            >
-              Buy ({table.getSelectedRowModel().rows.length}) item{table.getSelectedRowModel().rows.length > 1 && "s"}
             </Button>
           </div>
         )}

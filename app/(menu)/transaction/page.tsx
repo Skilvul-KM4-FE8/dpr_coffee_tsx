@@ -51,9 +51,6 @@ export default function MenuPage() {
       <Card className="border-none drop-shadow-sm">
         <CardHeader className="flex gap-y-2 lg:flex-row lg:items-center lg:justify-between">
           <CardTitle className="text-xl line-clamp-1">Transaction Page</CardTitle>
-          <Button onClick={() => openTransactionDialog({ id: "", name: "", price: 0 } as any)} className="flex items-center">
-            <Plus className="mr-2" /> Add Transaction
-          </Button>
         </CardHeader>
         <CardContent>
           <DataTable

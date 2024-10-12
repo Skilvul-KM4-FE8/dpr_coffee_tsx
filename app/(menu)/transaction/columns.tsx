@@ -4,12 +4,13 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Minus, MoreHorizontal, Plus } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
 
-import { useOpenMenu } from "@/features/menu/hooks/use-open-menu";
+import useOpenTransaction from "@/features/transaction/components/transaction-detail-dialog";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useDeleteMenu } from "@/features/menu/api/use-delete-menu";
+import useTransactionDialog from "@/features/transaction/hooks/use-transaction-dialog";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
@@ -22,8 +23,8 @@ export type transactionType = {
     name: string;
     price: number;
     quantity: number;
-    // createdAt: Date
-    // updatedAt: Date
+    createdAt: Date;
+    updatedAt: Date;
   }[];
   totalPrice: number;
 };
@@ -72,22 +73,49 @@ export const columns: ColumnDef<transactionType>[] = [
     },
   },
   {
+    accessorKey: "createdAt",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const dateString = row.getValue("createdAt") as Date;
+      const date = new Date(dateString);
+
+      // Format the date to show only day, month, year, hours, and minutes
+      const formattedDate = date.toLocaleString("en-US", {
+        year: "numeric",
+        month: "2-digit", // Use 'long' if you want the full month name
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true, // Set to true if you want 12-hour format
+      });
+
+      return <span>{formattedDate}</span>;
+    },
+  },
+  {
     id: "actions",
     header: "actions",
     cell: ({ row }) => {
       const payment = row.original;
 
-      const { onOpen } = useOpenMenu();
+      const { onOpen, isOpen, onClose } = useTransactionDialog();
       const deleteMutation = useDeleteMenu(payment.id!);
       const [DialogConfirm, confirm] = useConfirm("Are you sure?", "you are about to delete this menu");
 
-      const handleDeleteMenu = async () => {
-        const ok = await confirm();
-        if (ok) {
-          deleteMutation.mutate();
-        }
-        return null;
-      };
+      // const handleDeleteTransaction = async () => {
+      //   const ok = await confirm();
+      //   if (ok) {
+      //     deleteMutation.mutate();
+      //   }
+      //   return null;
+      // };
 
       return (
         <>
@@ -102,7 +130,7 @@ export const columns: ColumnDef<transactionType>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => onOpen(row.original.id)}>Details</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onOpen(row.original)}>Details</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </>

@@ -1,19 +1,29 @@
 import { create } from "zustand";
 
-type TransactionItem = {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  // createdAt: Date;
-  // updatedAt: Date;
-};
-
 type Transaction = {
   id: string;
   receptionist: string;
   customer: string;
-  items: TransactionItem[];
+  totalPrice: number;
+  createdAt: Date;
+  updatedAt: Date;
+  items: [
+    {
+      id: string;
+      name: string;
+      price: number;
+      quantity: number;
+      createdAt: Date;
+      updatedAt: Date;
+      menu: {
+        id: string;
+        name: string;
+        price: number;
+        createdAt: Date;
+        updatedAt: Date;
+      };
+    }
+  ];
 };
 
 type TypeTransactionDialog = {
