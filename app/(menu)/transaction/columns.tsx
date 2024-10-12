@@ -102,10 +102,7 @@ export const columns: ColumnDef<transactionType>[] = [
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Copy this menu ID</DropdownMenuItem>
               <DropdownMenuItem onClick={() => onOpen(row.original.id)}>Details</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => onOpen(row.original.id)}>Edit</DropdownMenuItem>
-              <DropdownMenuItem onClick={handleDeleteMenu}>Delete</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </>
