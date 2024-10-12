@@ -13,8 +13,8 @@ const routes = [
         label: "Menu",
     },
     {
-        href: "/transactions",
-        label: "Transactions",
+        href: "/transaction",
+        label: "Transaction",
     },
 ]
 
