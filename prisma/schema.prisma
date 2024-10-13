@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Menu {
+  id                String   @id @default(cuid())
+  name              String   @unique
+  price             Float
+  category          String   @default("Drink")
+  TransactionItem   TransactionItem[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Transaction {
+  id                String   @id @default(cuid()) 
+  receptionist      String
+  customer          String
+  totalPrice        Float
+  items             TransactionItem[]
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model TransactionItem {
+  id                String    @id @default(cuid())
+  quantity          Int
+  menu              Menu      @relation(fields: [menuId], references: [id])
+  menuId            String
+  transaction       Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  transactionId     String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
