@@ -19,7 +19,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onBuyItems }
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
 
-  const [ConfirmDialog, confirm] = useConfirm("Delete", "Are you sure you want to delete this item?");
+  // const [ConfirmDialog, confirm] = useConfirm("Delete", "Are you sure you want to delete this item?");
 
   // const sortedData = React.useMemo(() => {
   //   const selectedRows = data.filter(row => row.getIsSelected()); // Adjust based on your data structure
@@ -49,14 +49,12 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onBuyItems }
 
   return (
     <div>
-      <ConfirmDialog />
+      {/* <ConfirmDialog /> */}
       <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter names..."
           value={sortingValue ?? ""}
-          onChange={(event) => {
-            setSortingValue(event.target.value), table.getColumn("name")?.setFilterValue(event.target.value);
-          }}
+          onChange={(event) => {table.getColumn("name")?.setFilterValue(event.target.value)}}
           className="max-w-sm"
         />
         {table.getSelectedRowModel().rows.length > 0 && (
@@ -81,8 +79,8 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onBuyItems }
               disabled={disabled}
               className="bg-gradient-to-b from-[#7a77c4] to-[#6196A6]"
               onClick={async () => {
-                table.getColumn("name")?.setFilterValue("");
-                setSortingValue(""), onBuyItems(table.getSelectedRowModel().rows);
+                // table.getColumn("name")?.setFilterValue("");
+                onBuyItems(table.getSelectedRowModel().rows);
               }}
             >
               Buy ({table.getSelectedRowModel().rows.length}) item{table.getSelectedRowModel().rows.length > 1 && "s"}

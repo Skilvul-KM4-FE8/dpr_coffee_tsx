@@ -1,4 +1,4 @@
-import {Area, AreaChart, Bar, BarChart, CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts"
+import {Area, Bar, CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts"
 import { CustomTooltip } from "./custom-tooltip"
 
 type Props = {

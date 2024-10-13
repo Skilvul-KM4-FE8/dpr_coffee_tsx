@@ -1,10 +1,7 @@
 "use client";
 import { columns } from "@/app/(menu)/columns";
 import { DataTable } from "@/app/(menu)/data-table";
-import { Button } from "@/components/ui/button";
-import { useNewMenu } from "@/features/menu/hooks/use-new-menu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Plus } from "lucide-react";
 import { useGetMenus } from "@/features/menu/api/use-get-menus";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useBulkDeleteMenus } from "@/features/menu/api/use-bulk-delete-menus";
@@ -13,7 +10,6 @@ import useBuyDialog from "@/features/transaction/hooks/use-buy-dialog";
 export default function MenuPage() {
   const menuQuery = useGetMenus();
   const menuData = menuQuery.data || [];
-  const { onOpen } = useNewMenu();
   // console.log("Data dari Api:", menuData);
   const { onOpen: isOpenBuyDialog } = useBuyDialog();
 

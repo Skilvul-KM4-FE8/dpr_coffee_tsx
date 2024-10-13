@@ -54,9 +54,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete, on
         <Input
           placeholder="Filter names..."
           value={sortingValue ?? ""}
-          onChange={(event) => {
-            setSortingValue(event.target.value), table.getColumn("name")?.setFilterValue(event.target.value);
-          }}
+          onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         {table.getSelectedRowModel().rows.length > 0 && (
@@ -80,10 +78,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete, on
               type="button"
               disabled={disabled}
               className="bg-gradient-to-b from-[#7a77c4] to-[#6196A6]"
-              onClick={async () => {
-                table.getColumn("name")?.setFilterValue("");
-                setSortingValue(""), onBuyItems(table.getSelectedRowModel().rows);
-              }}
+              onClick={async () => onBuyItems(table.getSelectedRowModel().rows)}
             >
               Buy ({table.getSelectedRowModel().rows.length}) item{table.getSelectedRowModel().rows.length > 1 && "s"}
             </Button>
