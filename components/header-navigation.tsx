@@ -20,6 +20,10 @@ const routes = [
     href: "/management",
     label: "Management",
   },
+  {
+    href: "/overview",
+    label: "Overview",
+  },
 ];
 
 export const Navigation = () => {
