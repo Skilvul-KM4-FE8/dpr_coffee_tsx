@@ -1,6 +1,6 @@
 "use client";
-import { columns } from "@/app/(menu)/columns";
-import { DataTable } from "@/app/(menu)/data-table";
+import { columns } from "@/app/(menu)/management/columns";
+import { DataTable } from "@/app/(menu)/management/data-table";
 import { Button } from "@/components/ui/button";
 import { useNewMenu } from "@/features/menu/hooks/use-new-menu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,11 +54,11 @@ export default function MenuPage() {
     <div className="mx-auto max-w-screen-2xl w-full pb-10 -mt-24">
       <Card className="border-none drop-shadow-sm ">
         <CardHeader className="flex gap-y-2 lg:flex-row lg:items-center lg:justify-between">
-          <CardTitle className="text-xl line-clamp-1">Menu Page</CardTitle>
-          {/* <Button size="sm" onClick={onOpen}>
+          <CardTitle className="text-xl line-clamp-1">Accounts Page</CardTitle>
+          <Button size="sm" onClick={onOpen}>
             <Plus className="size-4 mr-2" />
             Add new
-          </Button> */}
+          </Button>
         </CardHeader>
         <CardContent>
           <DataTable
@@ -68,10 +68,10 @@ export default function MenuPage() {
               quantity: 1,
             }))}
             disabled={disabled}
-            // onDelete={(rows) => {
-            //   const ids = rows.map((row) => row.original.id);
-            //   bulkDeleteMenuMutation.mutate(ids);
-            // }}
+            onDelete={(rows) => {
+              const ids = rows.map((row) => row.original.id);
+              bulkDeleteMenuMutation.mutate(ids);
+            }}
             onBuyItems={(rows) => {
               // console.log("Rows selected for buying:", rows);
               const datas = rows.map((row) => ({

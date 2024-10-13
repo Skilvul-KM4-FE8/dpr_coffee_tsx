@@ -1,30 +1,33 @@
 import { create } from "zustand";
 
-type Transaction = {
+interface Menu {
+  id: string;
+  name: string;
+  price: number;
+  category: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface TransactionItem {
+  id: string;
+  quantity: number;
+  menuId: string;
+  transactionId: string;
+  createdAt: string;
+  updatedAt: string;
+  menu: Menu;
+}
+
+interface Transaction {
   id: string;
   receptionist: string;
   customer: string;
   totalPrice: number;
-  createdAt: Date;
-  updatedAt: Date;
-  items: [
-    {
-      id: string;
-      name: string;
-      price: number;
-      quantity: number;
-      createdAt: Date;
-      updatedAt: Date;
-      menu: {
-        id: string;
-        name: string;
-        price: number;
-        createdAt: Date;
-        updatedAt: Date;
-      };
-    }
-  ];
-};
+  createdAt: string;
+  updatedAt: string;
+  items: TransactionItem[];
+}
 
 type TypeTransactionDialog = {
   isOpen: boolean;

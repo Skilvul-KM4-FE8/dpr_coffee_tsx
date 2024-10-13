@@ -6,22 +6,26 @@ import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { useConfirm } from "@/hooks/use-confirm";
-import { useBulkDeleteTransaction } from "@/features/transaction/api/use-bulk-delete-transaction";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   disabled?: boolean;
   onDelete: (rows: Row<TData>[]) => void;
+  onBuyItems: (rows: Row<TData>[]) => void;
 }
 
-export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({ columns, data, disabled, onDelete, onBuyItems }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  // onDelete: (rows: Row<TData>[]) => void;
 
   const [ConfirmDialog, confirm] = useConfirm("Delete", "Are you sure you want to delete this item?");
-  const bulkDeleteTransactionMutation = useBulkDeleteTransaction();
+
+  // const sortedData = React.useMemo(() => {
+  //   const selectedRows = data.filter(row => row.getIsSelected()); // Adjust based on your data structure
+  //   const unselectedRows = data.filter(row => !row.getIsSelected());
+  //   return [...selectedRows, ...unselectedRows];
+  // }, [data]);
 
   const table = useReactTable({
     // data: sortedData, // Use the sorted data here
@@ -41,17 +45,17 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
   });
 
   // Create a sorted data array with selected rows at the top
-  const [sortingValue, setSortingValue] = React.useState((table.getColumn("customer")?.getFilterValue() as string) || "");
+  const [sortingValue, setSortingValue] = React.useState((table.getColumn("name")?.getFilterValue() as string) || "");
 
   return (
     <div>
       <ConfirmDialog />
       <div className="flex items-center justify-between py-4">
         <Input
-          placeholder="Find customer..."
+          placeholder="Filter names..."
           value={sortingValue ?? ""}
           onChange={(event) => {
-            setSortingValue(event.target.value), table.getColumn("customer")?.setFilterValue(event.target.value);
+            setSortingValue(event.target.value), table.getColumn("name")?.setFilterValue(event.target.value);
           }}
           className="max-w-sm"
         />
@@ -69,15 +73,19 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
                   onDelete(table.getSelectedRowModel().rows);
                 }
               }}
-              // onClick={async () => {
-              //   const ok = await confirm();
-              //   if (ok) {
-              //     // table.getFilteredSelectedRowModel().rows
-              //     onDelete(table.getSelectedRowModel().rows);
-              //   }
-              // }}
             >
               Delete ({table.getSelectedRowModel().rows.length})
+            </Button>
+            <Button
+              type="button"
+              disabled={disabled}
+              className="bg-gradient-to-b from-[#7a77c4] to-[#6196A6]"
+              onClick={async () => {
+                table.getColumn("name")?.setFilterValue("");
+                setSortingValue(""), onBuyItems(table.getSelectedRowModel().rows);
+              }}
+            >
+              Buy ({table.getSelectedRowModel().rows.length}) item{table.getSelectedRowModel().rows.length > 1 && "s"}
             </Button>
           </div>
         )}

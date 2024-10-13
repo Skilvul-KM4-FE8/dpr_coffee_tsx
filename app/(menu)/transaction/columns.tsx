@@ -3,14 +3,12 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Minus, MoreHorizontal, Plus } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
-
-import useOpenTransaction from "@/features/transaction/components/transaction-detail-dialog";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useConfirm } from "@/hooks/use-confirm";
-import { useDeleteMenu } from "@/features/menu/api/use-delete-menu";
+import { useDeleteTransaction } from "@/features/transaction/api/use-delete-transaction";
 import useTransactionDialog from "@/features/transaction/hooks/use-transaction-dialog";
+
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
@@ -18,15 +16,10 @@ export type transactionType = {
   id: string;
   receptionist: string;
   customer: string;
-  items: {
-    id: string;
-    name: string;
-    price: number;
-    quantity: number;
-    createdAt: Date;
-    updatedAt: Date;
-  }[];
   totalPrice: number;
+  createdAt: string;
+  updatedAt: string;
+  items: any[]; // Adjust the type of items as per your actual data structure
 };
 
 export const columns: ColumnDef<transactionType>[] = [
@@ -113,16 +106,17 @@ export const columns: ColumnDef<transactionType>[] = [
       const payment = row.original;
 
       const { onOpen, isOpen, onClose } = useTransactionDialog();
-      const deleteMutation = useDeleteMenu(payment.id!);
+      const deleteMutation = useDeleteTransaction(payment.id!);
       const [DialogConfirm, confirm] = useConfirm("Are you sure?", "you are about to delete this menu");
 
-      // const handleDeleteTransaction = async () => {
-      //   const ok = await confirm();
-      //   if (ok) {
-      //     deleteMutation.mutate();
-      //   }
-      //   return null;
-      // };
+      const handleDeleteTransaction = async () => {
+        const ok = await confirm();
+        if (ok) {
+          deleteMutation.mutate();
+        }
+        return null;
+      };
+      console.log(row.original);
 
       return (
         <>

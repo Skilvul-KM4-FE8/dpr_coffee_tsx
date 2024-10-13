@@ -1,25 +1,25 @@
 "use client";
+// import { Loader2, Plus } from "lucide-react";
+// import { useGetMenus } from "@/features/menu/api/use-get-menus";
+// import useBuyDialog from "@/features/transaction/hooks/use-buy-dialog";
 import { columns } from "@/app/(menu)/transaction/columns";
 import { DataTable } from "@/app/(menu)/transaction/data-table";
 import { Button } from "@/components/ui/button";
 import { useNewMenu } from "@/features/menu/hooks/use-new-menu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Plus } from "lucide-react";
-import { useGetMenus } from "@/features/menu/api/use-get-menus";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useBulkDeleteMenus } from "@/features/menu/api/use-bulk-delete-menus";
-import useBuyDialog from "@/features/transaction/hooks/use-buy-dialog";
+import { useBulkDeleteTransaction } from "@/features/transaction/api/use-bulk-delete-transaction";
 import { useGetTransactions } from "@/features/transaction/api/use-get-transactions";
 import useTransactionDialog from "@/features/transaction/hooks/use-transaction-dialog";
 
 export default function MenuPage() {
   const transactionQuery = useGetTransactions();
   const transactionData = transactionQuery.data || [];
-  const { isOpen, onOpen, onClose } = useNewMenu();
+  // const { isOpen, onOpen, onClose } = useNewMenu();
   const { onOpen: openTransactionDialog } = useTransactionDialog();
-  const bulkDeleteMenuMutation = useBulkDeleteMenus();
+  const bulkDeleteTransactionMutation = useBulkDeleteTransaction();
 
-  const disabled = transactionQuery.isLoading || bulkDeleteMenuMutation.isPending;
+  const disabled = transactionQuery.isLoading || bulkDeleteTransactionMutation.isPending;
 
   if (transactionQuery.isLoading) {
     return (
@@ -59,7 +59,7 @@ export default function MenuPage() {
             disabled={disabled}
             onDelete={(rows) => {
               const ids = rows.map((row) => row.original.id);
-              bulkDeleteMenuMutation.mutate(ids);
+              bulkDeleteTransactionMutation.mutate(ids);
             }}
           />
         </CardContent>
