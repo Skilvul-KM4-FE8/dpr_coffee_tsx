@@ -20,14 +20,6 @@ const routes = [
         href: "/overview",
         label: "Overview",
     },
-    {
-        href: "/managemenu",
-        label: "Manage Menu",
-    },
-    {
-        href: "/managetransaction",
-        label: "Manage Transaction",
-    },
 ]
 
 export const Navigation = () => {
