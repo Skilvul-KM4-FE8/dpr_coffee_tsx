@@ -1,6 +1,5 @@
-import { ClerkLoaded, ClerkLoading, SignIn, SignUp } from "@clerk/nextjs";
+import { ClerkLoaded, ClerkLoading, SignUp } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
-import Image from "next/image";
 
 export default function SignUpPage() {
     return (
@@ -19,7 +18,7 @@ export default function SignUpPage() {
                     </div>
                 </div>
                 <div className="hidden lg:flex lg:flex-col gap-4 h-full w-full bg-blue-600 justify-center items-center">
-                    <Image src="logo.svg" alt="" width={100} height={100} />
+                    {/* <Image src="logo.svg" alt="" width={100} height={100} /> */}
                     <h1 className="text-3xl font-sans text-white font-medium">dpr_coffee App</h1>
                 </div>
             </div>

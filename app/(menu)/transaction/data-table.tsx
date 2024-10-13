@@ -20,8 +20,8 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   // onDelete: (rows: Row<TData>[]) => void;
 
-  const [ConfirmDialog, confirm] = useConfirm("Delete", "Are you sure you want to delete this item?");
-  const bulkDeleteTransactionMutation = useBulkDeleteTransaction();
+  const [ConfirmDialog, Confirm] = useConfirm("Delete", "Are you sure you want to delete this item?");
+  // const bulkDeleteTransactionMutation = useBulkDeleteTransaction();
 
   const table = useReactTable({
     // data: sortedData, // Use the sorted data here
@@ -41,7 +41,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
   });
 
   // Create a sorted data array with selected rows at the top
-  const [sortingValue, setSortingValue] = React.useState((table.getColumn("customer")?.getFilterValue() as string) || "");
+  const [sortingValue] = React.useState((table.getColumn("customer")?.getFilterValue() as string) || "");
 
   return (
     <div>
@@ -50,9 +50,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
         <Input
           placeholder="Find customer..."
           value={sortingValue ?? ""}
-          onChange={(event) => {
-            setSortingValue(event.target.value), table.getColumn("customer")?.setFilterValue(event.target.value);
-          }}
+          onChange={(event) => table.getColumn("customer")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         {table.getSelectedRowModel().rows.length > 0 && (
@@ -63,7 +61,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
               variant={"destructive"}
               className="transition"
               onClick={async () => {
-                const ok = await confirm();
+                const ok = await Confirm();
                 if (ok) {
                   // table.getFilteredSelectedRowModel().rows
                   onDelete(table.getSelectedRowModel().rows);

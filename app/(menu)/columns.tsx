@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Minus, MoreHorizontal, Plus } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
 
 import { useOpenMenu } from "@/features/menu/hooks/use-open-menu";
@@ -88,17 +88,16 @@ export const columns: ColumnDef<Menu>[] = [
     cell: ({ row }) => {
       const payment = row.original;
 
-      const { onOpen } = useOpenMenu();
       const deleteMutation = useDeleteMenu(payment.id!);
-      const [DialogConfirm, confirm] = useConfirm("Are you sure?", "you are about to delete this menu");
+      const [DialogConfirm] = useConfirm("Are you sure?", "you are about to delete this menu");
 
-      const handleDeleteMenu = async () => {
-        const ok = await confirm();
-        if (ok) {
-          deleteMutation.mutate();
-        }
-        return null;
-      };
+      // const handleDeleteMenu = async () => {
+      //   const ok = await confirm();
+      //   if (ok) {
+      //     deleteMutation.mutate();
+      //   }
+      //   return null;
+      // };
 
       return (
         <>
