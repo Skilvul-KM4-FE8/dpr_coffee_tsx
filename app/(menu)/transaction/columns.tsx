@@ -4,7 +4,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useDeleteTransaction } from "@/features/transaction/api/use-delete-transaction";
 import useTransactionDialog from "@/features/transaction/hooks/use-transaction-dialog";
 
 // This type is used to define the shape of our data.
@@ -106,7 +105,6 @@ export const columns: ColumnDef<transactionType>[] = [
       const { onOpen } = useTransactionDialog();
       // const deleteMutation = useDeleteTransaction(payment.id!);
       // const [DialogConfirm, Confirm] = useConfirm("Are you sure?", "you are about to delete this menu");
-
 
       return (
         <>

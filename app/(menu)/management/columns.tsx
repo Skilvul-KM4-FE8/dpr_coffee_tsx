@@ -87,11 +87,11 @@ export const columns: ColumnDef<Menu>[] = [
     header: "actions",
     cell: ({ row }) => {
       const payment = row.original;
-  
+
       const { onOpen } = useOpenMenu(); // Hook bisa digunakan di sini dalam komponen React
       const deleteMutation = useDeleteMenu(payment.id!);
       const [DialogConfirm, Confirm] = useConfirm("Apakah Anda yakin?", "Anda akan menghapus menu ini");
-  
+
       const handleDeleteMenu = async () => {
         const ok = await Confirm();
         if (ok) {
@@ -99,7 +99,7 @@ export const columns: ColumnDef<Menu>[] = [
         }
         return null;
       };
-  
+
       return (
         <>
           <DialogConfirm />
@@ -121,5 +121,5 @@ export const columns: ColumnDef<Menu>[] = [
         </>
       );
     },
-  }
+  },
 ];

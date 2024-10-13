@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { useConfirm } from "@/hooks/use-confirm";
-import { useBulkDeleteTransaction } from "@/features/transaction/api/use-bulk-delete-transaction";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -47,12 +46,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
     <div>
       <ConfirmDialog />
       <div className="flex items-center justify-between py-4">
-        <Input
-          placeholder="Find customer..."
-          value={sortingValue ?? ""}
-          onChange={(event) => table.getColumn("customer")?.setFilterValue(event.target.value)}
-          className="max-w-sm"
-        />
+        <Input placeholder="Find customer..." value={sortingValue ?? ""} onChange={(event) => table.getColumn("customer")?.setFilterValue(event.target.value)} className="max-w-sm" />
         {table.getSelectedRowModel().rows.length > 0 && (
           <div className="gap-x-4 flex ml-4">
             <Button
