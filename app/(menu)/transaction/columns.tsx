@@ -1,11 +1,9 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Minus, MoreHorizontal, Plus } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useConfirm } from "@/hooks/use-confirm";
 import { useDeleteTransaction } from "@/features/transaction/api/use-delete-transaction";
 import useTransactionDialog from "@/features/transaction/hooks/use-transaction-dialog";
 
@@ -103,20 +101,12 @@ export const columns: ColumnDef<transactionType>[] = [
     id: "actions",
     header: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      // const payment = row.original;
 
-      const { onOpen, isOpen, onClose } = useTransactionDialog();
-      const deleteMutation = useDeleteTransaction(payment.id!);
-      const [DialogConfirm, confirm] = useConfirm("Are you sure?", "you are about to delete this menu");
+      const { onOpen } = useTransactionDialog();
+      // const deleteMutation = useDeleteTransaction(payment.id!);
+      // const [DialogConfirm, Confirm] = useConfirm("Are you sure?", "you are about to delete this menu");
 
-      const handleDeleteTransaction = async () => {
-        const ok = await confirm();
-        if (ok) {
-          deleteMutation.mutate();
-        }
-        return null;
-      };
-      console.log(row.original);
 
       return (
         <>

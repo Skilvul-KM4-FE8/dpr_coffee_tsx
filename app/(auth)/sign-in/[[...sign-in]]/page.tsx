@@ -1,6 +1,5 @@
 import { ClerkLoaded, ClerkLoading, SignIn } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
-import Image from "next/image";
 
 export default function SignInPage() {
     return (

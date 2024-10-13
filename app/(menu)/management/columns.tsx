@@ -1,7 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { Minus, MoreHorizontal, Plus } from "lucide-react";
+import { MoreHorizontal } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
 
 import { useOpenMenu } from "@/features/menu/hooks/use-open-menu";
@@ -87,39 +87,39 @@ export const columns: ColumnDef<Menu>[] = [
     header: "actions",
     cell: ({ row }) => {
       const payment = row.original;
-
-      const { onOpen } = useOpenMenu();
+  
+      const { onOpen } = useOpenMenu(); // Hook bisa digunakan di sini dalam komponen React
       const deleteMutation = useDeleteMenu(payment.id!);
-      const [DialogConfirm, confirm] = useConfirm("Are you sure?", "you are about to delete this menu");
-
+      const [DialogConfirm, Confirm] = useConfirm("Apakah Anda yakin?", "Anda akan menghapus menu ini");
+  
       const handleDeleteMenu = async () => {
-        const ok = await confirm();
+        const ok = await Confirm();
         if (ok) {
           deleteMutation.mutate();
         }
         return null;
       };
-
+  
       return (
         <>
           <DialogConfirm />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
+                <span className="sr-only">Buka menu</span>
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuLabel>Aksi</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Copy this menu ID</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Salin ID menu ini</DropdownMenuItem>
               <DropdownMenuItem onClick={() => onOpen(row.original.id)}>Edit</DropdownMenuItem>
-              <DropdownMenuItem onClick={handleDeleteMenu}>Delete</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleDeleteMenu}>Hapus</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </>
       );
     },
-  },
+  }
 ];
