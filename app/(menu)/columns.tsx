@@ -4,12 +4,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { ArrowUpDown } from "lucide-react";
 
-import { useOpenMenu } from "@/features/menu/hooks/use-open-menu";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useConfirm } from "@/hooks/use-confirm";
-import { useDeleteMenu } from "@/features/menu/api/use-delete-menu";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
@@ -88,8 +85,8 @@ export const columns: ColumnDef<Menu>[] = [
     cell: ({ row }) => {
       const payment = row.original;
 
-      const deleteMutation = useDeleteMenu(payment.id!);
-      const [DialogConfirm] = useConfirm("Are you sure?", "you are about to delete this menu");
+      // const deleteMutation = useDeleteMenu(payment.id!);
+      // const [DialogConfirm] = useConfirm("Are you sure?", "you are about to delete this menu");
 
       // const handleDeleteMenu = async () => {
       //   const ok = await confirm();
@@ -101,7 +98,7 @@ export const columns: ColumnDef<Menu>[] = [
 
       return (
         <>
-          <DialogConfirm />
+          {/* <DialogConfirm /> */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">

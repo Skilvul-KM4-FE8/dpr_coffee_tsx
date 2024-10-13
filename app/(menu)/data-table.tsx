@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
-import { useConfirm } from "@/hooks/use-confirm";
+// import { useConfirm } from "@/hooks/use-confirm";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -45,7 +45,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onBuyItems }
   });
 
   // Create a sorted data array with selected rows at the top
-  const [sortingValue, setSortingValue] = React.useState((table.getColumn("name")?.getFilterValue() as string) || "");
+  const [sortingValue] = React.useState((table.getColumn("name")?.getFilterValue() as string) || "");
 
   return (
     <div>
@@ -54,7 +54,9 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onBuyItems }
         <Input
           placeholder="Filter names..."
           value={sortingValue ?? ""}
-          onChange={(event) => {table.getColumn("name")?.setFilterValue(event.target.value)}}
+          onChange={(event) => {
+            table.getColumn("name")?.setFilterValue(event.target.value);
+          }}
           className="max-w-sm"
         />
         {table.getSelectedRowModel().rows.length > 0 && (
