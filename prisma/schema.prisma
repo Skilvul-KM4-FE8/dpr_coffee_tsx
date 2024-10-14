@@ -33,10 +33,11 @@ model Transaction {
 model TransactionItem {
   id                String    @id @default(cuid())
   quantity          Int
-  menu              Menu?     @relation(fields: [menuId], references: [id], onDelete: Cascade) // Use SetNull
-  menuId            String?   // Make it nullable
+  menu              Menu?     @relation(fields: [menuId], references: [id], onDelete: SetNull) // Use SetNull
+  menuId            String?   // Make it nullable 
   transaction       Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
   transactionId     String
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
+  // 
 }

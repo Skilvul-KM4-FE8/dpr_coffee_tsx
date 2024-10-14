@@ -14,14 +14,14 @@ export default function MenuPage() {
 
   const [soldMenu, setSoldMenu] = useState(0);
 
-  const totalSale = transactionData.reduce((acc: any, item: any) => acc + item.totalPrice, 0);
+  const totalSale = transactionData.length > 0 ? transactionData?.reduce((acc: any, item: any) => acc + item.totalPrice, 0) : 0;
   const totalTransaction = transactionData.length;
 
-  const fixedData = transactionData.map((item: any) => ({
+  const fixedData = transactionData.length > 0 ? transactionData.map((item: any) => ({
     ...item,
     createdAt: format(new Date(item.createdAt), "dd MMMM yyyy"),
     totalPrice: item.totalPrice,
-  }));
+  })) : [];
 
   useEffect(() => {
     const totalMenuSold = transactionData.reduce((total: number, transaction: any) => {
