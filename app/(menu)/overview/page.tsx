@@ -24,11 +24,19 @@ export default function MenuPage() {
   })) : [];
 
   useEffect(() => {
-    const totalMenuSold = transactionData.reduce((total: number, transaction: any) => {
-      const quantityPerTransaction = transaction.items.reduce((acc: number, item: any) => acc + item.quantity, 0);
-      return total + quantityPerTransaction;
-    }, 0);
-    setSoldMenu(totalMenuSold);
+    if (transactionData.length > 0) {
+      const totalMenuSold = transactionData.reduce((total: number, transaction: any) => {
+        if (transaction.items && Array.isArray(transaction.items)) {
+          const quantityPerTransaction = transaction.items.reduce(
+            (acc: number, item: any) => acc + item.quantity,
+            0
+          );
+          return total + quantityPerTransaction;
+        }
+        return total;
+      }, 0);
+      setSoldMenu(totalMenuSold);
+    }
   }, [transactionData]);
 
   return (
