@@ -45,7 +45,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onBuyItems }
   });
 
   // Create a sorted data array with selected rows at the top
-  const [sortingValue] = React.useState((table.getColumn("name")?.getFilterValue() as string) || "");
+  // const [filterValue, setFilterValue] = React.useState((table.getColumn("name")?.getFilterValue() as string) || "");
 
   return (
     <div>
@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onBuyItems }
       <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter names..."
-          value={sortingValue}
+          value={(table.getColumn("name")?.getFilterValue() as string) || ""}
           onChange={(event) => {
             table.getColumn("name")?.setFilterValue(event.target.value);
           }}
