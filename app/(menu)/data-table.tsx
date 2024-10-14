@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onBuyItems }
       <div className="flex items-center justify-between py-4">
         <Input
           placeholder="Filter names..."
-          value={sortingValue ?? ""}
+          value={sortingValue}
           onChange={(event) => {
             table.getColumn("name")?.setFilterValue(event.target.value);
           }}
