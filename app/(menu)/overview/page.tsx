@@ -10,7 +10,7 @@ export default function MenuPage() {
   
   // Use useMemo to memoize transactionData
   const transactionData = useMemo(() => transactions.data || [], [transactions.data]);
-  console.log(transactionData);
+  // console.log(transactionData);
 
   const [soldMenu, setSoldMenu] = useState(0);
 
