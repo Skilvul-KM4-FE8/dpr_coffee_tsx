@@ -11,6 +11,7 @@ import { Loader2 } from "lucide-react";
 const formSchema = z.object({
   name: z.string(),
   price: z.string(),
+  category: z.string(),
   // id: z.string(),
 });
 
@@ -21,7 +22,7 @@ const EditMenuSheet = () => {
   const menuQuery = useGetMenu(id!);
   const editMutation = useEditMenu(id!);
 
-  const isLoading = menuQuery.isPending || menuQuery.isLoading || editMutation.isPending
+  const isLoading = menuQuery.isPending || menuQuery.isLoading || editMutation.isPending;
 
   const defaultValue = menuQuery.data
     ? {
@@ -36,18 +37,21 @@ const EditMenuSheet = () => {
       };
 
   const handleSubmit = (values: FormValues) => {
-    const parsedPrice = parseFloat(values.price)
+    const parsedPrice = parseFloat(values.price);
     if (isNaN(parsedPrice)) {
-        console.log("Price is not a number")
-        return
+      console.log("Price is not a number");
+      return;
     }
 
-    editMutation.mutate({...values, price: parsedPrice}, {
-      onSuccess: () => {
-        onClose()
+    editMutation.mutate(
+      { ...values, price: parsedPrice },
+      {
+        onSuccess: () => {
+          onClose();
+        },
       }
-    })
-  }
+    );
+  };
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>

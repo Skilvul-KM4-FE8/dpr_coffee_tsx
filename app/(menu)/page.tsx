@@ -20,9 +20,6 @@ export default function MenuPage() {
   if (menuQuery.isLoading) {
     return (
       <div className="max-w-screen-2xl w-full pb-10 -mt-24 flex justify-center items-center mx-auto">
-        {/* <div>
-              <Loader2 className="size-10 lg:size-14 text-muted-foreground animate-spin inline-block" />
-            </div> */}
         <Card className="w-full border-none drop-shadow-sm">
           <CardHeader className="flex gap-y-2 lg:flex-row lg:items-center lg:justify-between">
             <CardTitle className="text-xl line-clamp-1">
