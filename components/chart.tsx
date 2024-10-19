@@ -19,11 +19,24 @@ type Props = {
     disabled: boolean
 }
 
+
+
 export const Chart = ({data, disabled}:Props) => {
     const [variant, setVariant] = useState("area")
 
     const handleChangeChart = (value: string) => {
         setVariant(value)
+    }
+
+    if (disabled) {
+        return (
+            <div className="flex flex-col gap-y-4 items-center justify-center h-[350px] w-full">
+                <Loader2 className="animate-spin size-6 text-muted-foreground" />
+                <p className="text-muted-foreground text-sm">
+                    Loading...
+                </p>
+            </div>
+        )
     }
 
     return (
@@ -68,33 +81,21 @@ export const Chart = ({data, disabled}:Props) => {
                 </div>
             </CardHeader>
             <CardContent>
-                {disabled ? (
+                {data.length === 0 ? (
                     <div className="flex flex-col gap-y-4 items-center justify-center h-[350px] w-full">
-                        <Loader2 className="animate-spin size-6 text-muted-foreground" />
+                        <FileSearch className="size-6 text-muted-foreground" />
                         <p className="text-muted-foreground text-sm">
-                            Loading...
+                            No Data for this period
                         </p>
                     </div>
-                    ) : (
-                        <>
-                        {data.length === 0 ? (
-                            <div className="flex flex-col gap-y-4 items-center justify-center h-[350px] w-full">
-                                <FileSearch className="size-6 text-muted-foreground" />
-                                <p className="text-muted-foreground text-sm">
-                                    No Data for this period
-                                </p>
-                            </div>
-                        ) : (
-                            <>
-                            {variant === "area" && (<AreaVariant data={data} />)}
-                            {variant === "bar" && (<BarVariant data={data} />)}
-                            {variant === "line" && (<LineVariant data={data} />)}
-                            {variant === "composed" && (<ComposedVariant data={data} />)}
-                            </>
-                        )}                       
-                        </>
-                    )}
-
+                ) : (
+                    <>
+                    {variant === "area" && (<AreaVariant data={data} />)}
+                    {variant === "bar" && (<BarVariant data={data} />)}
+                    {variant === "line" && (<LineVariant data={data} />)}
+                    {variant === "composed" && (<ComposedVariant data={data} />)}
+                    </>
+                )}                       
             </CardContent>
         </Card>
         </>
