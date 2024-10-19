@@ -29,11 +29,13 @@ const EditMenuSheet = () => {
         id: menuQuery.data.id,
         name: menuQuery.data.name,
         price: menuQuery.data.price.toString(),
+        category: menuQuery.data.category,
       }
     : {
         id: "",
         name: "",
         price: "",
+        category: "",
       };
 
   const handleSubmit = (values: FormValues) => {
