@@ -34,6 +34,7 @@
     "react-currency-input-field": "^3.8.0",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
+    "react-to-print": "^3.0.2",
     "react-use": "^17.5.1",
     "recharts": "^2.13.0",
     "sonner": "^1.5.0",
