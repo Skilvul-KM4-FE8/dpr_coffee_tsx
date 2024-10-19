@@ -80,8 +80,20 @@ export const columns: ColumnDef<Menu>[] = [
     },
   },
   {
+    accessorKey: "category",
+    header: ({ column }) => {
+      return (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+          Category
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+
+  {
     id: "actions",
-    header: "actions",
+    header: "Actions",
     cell: ({ row }) => {
       const payment = row.original;
 
