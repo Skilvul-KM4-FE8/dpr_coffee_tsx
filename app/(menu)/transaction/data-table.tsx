@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { useConfirm } from "@/hooks/use-confirm";
+import { tsXLXS } from "ts-xlsx-export";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -42,18 +43,23 @@ export function DataTable<TData, TValue>({ columns, data, disabled, onDelete }: 
   // Create a sorted data array with selected rows at the top
   // const [sortingValue] = React.useState((table.getColumn("customer")?.getFilterValue() as string) || "");
 
+  //export handle
+
+  const handleExportExcel = async () => {
+    const selectedRowsExcel = table.getSelectedRowModel().rows;
+    console.log(selectedRowsExcel.map((row) => row.original));
+    const selectedRowParsingExcel = selectedRowsExcel.map((row) => row.original);
+    tsXLXS().exportAsExcelFile(selectedRowParsingExcel).saveAsExcelFile("Transaction Data");
+  };
+
   return (
     <div>
       <ConfirmDialog />
       <div className="flex items-center justify-between py-4">
-        <Input 
-          placeholder="Find customer..." 
-          value={(table.getColumn("customer")?.getFilterValue() as string) || ""} 
-          onChange={(event) => table.getColumn("customer")?.setFilterValue(event.target.value)} 
-          className="max-w-sm" 
-        />
+        <Input placeholder="Find customer..." value={(table.getColumn("customer")?.getFilterValue() as string) || ""} onChange={(event) => table.getColumn("customer")?.setFilterValue(event.target.value)} className="max-w-sm" />
         {table.getSelectedRowModel().rows.length > 0 && (
           <div className="gap-x-4 flex ml-4">
+            <Button onClick={handleExportExcel}>Export Excel</Button>
             <Button
               type="button"
               disabled={disabled}
