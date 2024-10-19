@@ -10,6 +10,7 @@ import { useState } from "react";
 const formSchema = z.object({
   name: z.string(),
   price: z.string(),
+  category: z.string(),
 });
 
 type FormValues = z.input<typeof formSchema>;

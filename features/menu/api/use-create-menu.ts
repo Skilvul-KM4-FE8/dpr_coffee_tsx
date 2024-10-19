@@ -5,14 +5,14 @@ import { toast } from "sonner";
 type MenuCreateInput = {
   name: string;
   price: number;
-  //   category: string;
+  category: string;
 };
 
 type ResponseType = {
   id: string;
   name: string;
   price: number;
-  //   categoty: string;
+  categoty: string;
 };
 
 export const useCreateMenu = () => {
