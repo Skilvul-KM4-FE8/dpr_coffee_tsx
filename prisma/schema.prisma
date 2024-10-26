@@ -11,6 +11,7 @@ datasource db {
 }
 
 model Menu {
+  userId            String?
   id                String   @id @default(cuid())
   name              String   @unique
   price             Float
@@ -21,6 +22,7 @@ model Menu {
 }
 
 model Transaction {
+  userId            String?
   id                String   @id @default(cuid()) 
   receptionist      String
   customer          String
