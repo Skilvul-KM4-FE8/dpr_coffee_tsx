@@ -28,10 +28,10 @@ const useOpenTransaction = () => {
               <TableBody>
                 {transaction?.items.map((item) => (
                   <TableRow key={item.id}>
-                    <TableCell className="font-medium">{item.menu.name}</TableCell>
+                    <TableCell className="font-medium">{item.name}</TableCell>
                     <TableCell className="font-medium">{item.quantity}</TableCell>
 
-                    <TableCell className="text-right">Rp.{item.menu.price}</TableCell>
+                    <TableCell className="text-right">Rp.{item.price}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

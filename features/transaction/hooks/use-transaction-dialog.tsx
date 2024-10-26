@@ -17,6 +17,9 @@ interface TransactionItem {
   createdAt: string;
   updatedAt: string;
   menu: Menu;
+  name: string,
+  price: number,
+  category: string,
 }
 
 interface Transaction {
