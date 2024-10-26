@@ -4,7 +4,8 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   const auth = getAuth(req as NextRequest);
-  // console.log({auth})
+  console.log(auth.userId);
+  // console.log({ auth });
   if (!auth?.userId) {
     return new Response(JSON.stringify({ message: "Unauthorized!" }), {
       status: 401,
@@ -27,6 +28,7 @@ export async function POST(req: Request) {
         name: payload.name,
         price: payload.price,
         category: payload.category,
+        userId: auth.userId,
       },
     });
 
@@ -49,7 +51,6 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   const auth = getAuth(req as NextRequest);
-
   if (!auth?.userId) {
     return new Response(JSON.stringify({ message: "Unauthorized!" }), {
       status: 401,
@@ -60,7 +61,12 @@ export async function GET(req: Request) {
   }
 
   try {
-    const data = await prisma.menu.findMany();
+    const data = await prisma.menu.findMany({
+      where: {
+        userId: auth.userId,
+      },
+    });
+    console.log({ data });
 
     return new Response(JSON.stringify(data));
   } catch (error) {
