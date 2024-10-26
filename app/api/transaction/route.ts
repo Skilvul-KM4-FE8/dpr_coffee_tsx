@@ -25,11 +25,15 @@ export async function POST(req: Request) {
         items: {
           create: payload.items.map((item: any) => ({
             quantity: item.quantity,
-            menu: {
-              connect: {
-                id: item.id,
-              },
-            },
+            name: item.name,
+            price: item.price,
+            category: item.category,
+            
+            // menu: {
+            //   connect: {
+            //     id: item.id,
+            //   },
+            // },
           })),
         },
       },
@@ -70,9 +74,9 @@ export async function GET(req: Request) {
       },
       include: {
         items: {
-          include: {
-            menu: true,
-          },
+          // include: {
+          //   menu: true,
+          // },
         },
       },
     });
