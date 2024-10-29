@@ -50,7 +50,7 @@ export async function GET(req: Request, { params }: ParamsType) {
       });
     }
 
-    console.log(response);
+    // console.log(response);
     return new Response(JSON.stringify(response), {
       status: 200,
       headers: {
@@ -72,8 +72,8 @@ export async function PATCH(req: Request, { params }: ParamsType) {
   const id = params.id;
   const auth = getAuth(req as NextRequest);
   const payload = await req.json();
-  console.log(payload);
-  console.log(id);
+  // console.log(payload);
+  // console.log(id);
 
   if (!id) {
     return new Response(JSON.stringify({ message: "Transaction ID is required!" }), {
@@ -111,7 +111,7 @@ export async function PATCH(req: Request, { params }: ParamsType) {
       });
     }
 
-    console.log(response);
+    // console.log(response);
     return new Response(JSON.stringify(response), {
       status: 200,
       headers: {
@@ -155,7 +155,7 @@ export async function DELETE(req: Request, { params }: ParamsType) {
         id: id,
       },
     });
-    console.log(response);
+    // console.log(response);
     return new Response(JSON.stringify({ message: "Success", response }), {
       status: 200,
       headers: {

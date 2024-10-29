@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(req: Request) {
   const auth = getAuth(req as NextRequest);
-  console.log(auth.userId);
+  // console.log(auth.userId);
   // console.log({ auth });
   if (!auth?.userId) {
     return new Response(JSON.stringify({ message: "Unauthorized!" }), {
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     // Parse the JSON body from the request
     const payload = await req.json(); // Use await to parse the JSON
 
-    console.log({ payload });
+    // console.log({ payload });
 
     // You can handle the payload here, e.g., save it to the database
 
@@ -66,7 +66,7 @@ export async function GET(req: Request) {
         userId: auth.userId,
       },
     });
-    console.log({ data });
+    // console.log({ data });
 
     return new Response(JSON.stringify(data));
   } catch (error) {
