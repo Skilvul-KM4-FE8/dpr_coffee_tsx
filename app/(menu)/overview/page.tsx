@@ -7,30 +7,30 @@ import { format } from "date-fns";
 
 export default function MenuPage() {
   const transactions = useGetTransactions();
-  
+
   // Use useMemo to memoize transactionData
   const transactionData = useMemo(() => transactions.data || [], [transactions.data]);
-  // console.log(transactionData);
+  console.log(transactionData);
 
   const [soldMenu, setSoldMenu] = useState(0);
 
   const totalSale = transactionData.length > 0 ? transactionData?.reduce((acc: any, item: any) => acc + item.totalPrice, 0) : 0;
   const totalTransaction = transactionData.length;
 
-  const fixedData = transactionData.length > 0 ? transactionData.map((item: any) => ({
-    ...item,
-    createdAt: format(new Date(item.createdAt), "dd MMMM yyyy"),
-    totalPrice: item.totalPrice,
-  })) : [];
+  const fixedData =
+    transactionData.length > 0
+      ? transactionData.map((item: any) => ({
+          ...item,
+          createdAt: format(new Date(item.createdAt), "dd MMMM yyyy"),
+          totalPrice: item.totalPrice,
+        }))
+      : [];
 
   useEffect(() => {
     if (transactionData.length > 0) {
       const totalMenuSold = transactionData.reduce((total: number, transaction: any) => {
         if (transaction.items && Array.isArray(transaction.items)) {
-          const quantityPerTransaction = transaction.items.reduce(
-            (acc: number, item: any) => acc + item.quantity,
-            0
-          );
+          const quantityPerTransaction = transaction.items.reduce((acc: number, item: any) => acc + item.quantity, 0);
           return total + quantityPerTransaction;
         }
         return total;
