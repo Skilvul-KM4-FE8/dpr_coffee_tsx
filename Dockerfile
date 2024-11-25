@@ -1,6 +1,14 @@
 # Use official Bun image
 FROM oven/bun:1 AS base
 
+# Install Node.js alongside Bun
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Set the working directory inside the container
 WORKDIR /app
 
@@ -23,7 +31,6 @@ RUN bunx prisma generate --schema=./prisma/schema.prisma
 COPY . .
 
 # Build the Next.js application
-# RUN bun run build
 RUN bun run build --no-lint
 
 # Final production image
@@ -35,7 +42,6 @@ WORKDIR /app
 # Copy the built app and dependencies from the build stage
 COPY --from=install /app/node_modules ./node_modules
 COPY --from=install /app/.next ./.next
-# COPY --from=install /app/public ./public
 COPY --from=install /app/package.json ./package.json
 
 # Expose the default port for Next.js
